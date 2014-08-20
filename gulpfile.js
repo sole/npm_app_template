@@ -3,6 +3,7 @@ var jshint = require('gulp-jshint');
 var browserify = require('gulp-browserify');
 var rename = require('gulp-rename');
 var replace = require('gulp-replace');
+var uglify = require('gulp-uglify');
 var yargs = require('yargs');
 
 gulp.task('lint', function() {
@@ -16,9 +17,10 @@ gulp.task('build', ['build-js', 'build-html', 'build-css']);
 gulp.task('build-js', function() {
 	return gulp.src('src/js/main.js')
 		.pipe(browserify({
-			insertGlobals: true,
+			insertGlobals: false,
 			debug: !yargs.argv.production
 		}))
+		.pipe(uglify())
 		.pipe(gulp.dest('./build/js'));
 });
 
