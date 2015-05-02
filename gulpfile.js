@@ -1,3 +1,4 @@
+var path = require('path');
 var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var browserify = require('gulp-browserify');
@@ -5,6 +6,8 @@ var rename = require('gulp-rename');
 var replace = require('gulp-replace');
 var uglify = require('gulp-uglify');
 var yargs = require('yargs');
+
+var BUILD = path.join(__dirname, 'build');
 
 gulp.task('lint', function() {
 	return gulp.src('src/js/**/*.js')
@@ -21,17 +24,17 @@ gulp.task('build-js', function() {
 			debug: !yargs.argv.production
 		}))
 		.pipe(uglify())
-		.pipe(gulp.dest('./build/js'));
+		.pipe(gulp.dest(path.join(BUILD, 'js')));
 });
 
 gulp.task('build-html', function() {
 	return gulp.src('src/index.html')
-		.pipe(gulp.dest('./build/'));
+		.pipe(gulp.dest(BUILD));
 });
 
 gulp.task('build-css', function() {
 	return gulp.src('src/css/style.css')
-		.pipe(gulp.dest('./build/css'));
+		.pipe(gulp.dest(path.join(BUILD, 'css')));
 });
 
 gulp.task('watch', function() {
